@@ -1,12 +1,14 @@
-package com.practice.testproject.config;
+package com.practice.testproject.util;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
+@Component
 public class LogDirectoryInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(LogDirectoryInitializer.class);
@@ -33,4 +35,3 @@ public class LogDirectoryInitializer {
         }
     }
 }
-
