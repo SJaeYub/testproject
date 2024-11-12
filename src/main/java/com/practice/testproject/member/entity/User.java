@@ -3,9 +3,9 @@ package com.practice.testproject.member.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "users")
-@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +19,4 @@ public class User {
 
     @Column(nullable = false)
     private String email;
-
 }
