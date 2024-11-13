@@ -13,25 +13,25 @@ public class LogDirectoryInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(LogDirectoryInitializer.class);
 
-    @Value("${logging.file.path}")
-    private String logPath;
-
-    @PostConstruct
-    public void init() {
-        createLogDirectory();
-    }
-
-    private void createLogDirectory() {
-        File directory = new File(logPath);
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
-            if (created) {
-                logger.info("Log directory created: {}", logPath);
-            } else {
-                logger.error("Failed to create log directory: {}", logPath);
-            }
-        } else {
-            logger.info("Log directory already exists: {}", logPath);
-        }
-    }
+//    @Value("${logging.file.path}")
+//    private String logPath;
+//
+//    @PostConstruct
+//    public void init() {
+//        createLogDirectory();
+//    }
+//
+//    private void createLogDirectory() {
+//        File directory = new File(logPath);
+//        if (!directory.exists()) {
+//            boolean created = directory.mkdirs();
+//            if (created) {
+//                logger.info("Log directory created: {}", logPath);
+//            } else {
+//                logger.error("Failed to create log directory: {}", logPath);
+//            }
+//        } else {
+//            logger.info("Log directory already exists: {}", logPath);
+//        }
+//    }
 }
