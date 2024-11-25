@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    tools {
+        gradle 'gradle8.11'  // Jenkins에 설정된 Gradle 버전
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'vm-container', url: 'https://github.com/SJaeYub/testproject.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'gradle clean build'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t your-springboot-app:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker stop your-springboot-app || true
+                    docker rm your-springboot-app || true
+                    docker run -d --name your-springboot-app \
+                    --network testproject-network \
+                    -p 8081:8080 \
+                    -v /applog/testwas/service_log/:/service_data \
+                    -v /applog/testwas/server_log/logs/:/server-data-properties/logs \
+                    -v /applog/testwas/server_log/work/:/server-data-properties/work \
+                    -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql_container:3306/testdb \
+                    -e SPRING_DATASOURCE_USERNAME=testuser \
+                    -e SPRING_DATASOURCE_PASSWORD=testuser.! \
+                    your-springboot-app:${BUILD_NUMBER}
+                '''
+            }
+        }
+    }
+}
